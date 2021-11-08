@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,8 +25,9 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
     public boolean gameOver = false;
     RecyclerView gridRecyclerView;
     TableroRecyclerAdapter tableroRecyclerAdapter;
-    TextView minesLeft;
+    TextView minesLeft, emoji;
     private Button btnStart;
+    Chronometer cronometro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +38,18 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         cantBomb = 10;
 
         btnStart = findViewById(R.id.btnStart);
+        cronometro = (Chronometer) findViewById(R.id.cronometro);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newGame(tam, cantBomb);
 
                 minesLeft = findViewById(R.id.minesLeft);
+                emoji = findViewById(R.id.emoji);
+
                 minesLeft.setText(Integer.toString(cantBomb));
                 btnStart.setEnabled(false);
+                newGame(tam, cantBomb);
             }
         });
 
@@ -51,6 +57,13 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
 
     private void newGame(int tam, int cantBomb){
         btnStart.setText(R.string.iniciar);
+        emoji.setText(R.string.Game);
+
+        cronometro.setBase(SystemClock.elapsedRealtime());
+        cronometro.start();
+
+
+
         tablero = new Tablero(tam); // Se crea el tablero del tamaño deseado
         tablero.setBombas(cantBomb); // Se colocan las bombas en el tablero de manera random
         this.gameOver = false;
@@ -68,6 +81,9 @@ public class MainActivity extends AppCompatActivity implements OnCellClickListen
         btnStart.setEnabled(true);
         btnStart.setText("Restart");
         gameOver = true;
+        emoji.setText(R.string.GameOver);
+        cronometro.stop();
+
 
         int count = tableroRecyclerAdapter.getItemCount();
         for(int i = 0; i < count; i++)
