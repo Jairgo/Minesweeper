@@ -29,96 +29,135 @@ public class Tablero {
         }
     }
 
+    public void revealBombs(){
+        for (Cell c: cells){
+            if(c.getVal() == Cell.bomba)
+                c.setRevelado(true);
+        }
+    }
+
     /**
-     * @param pos Es la posición de la celda quefue clickeada
+     * @param pos Es la posición de la celda que fue clickeada
      * @param tam Es el tamaño del tablero, para poder calcular el tamaño total de celdas
      * @return la cantidad de bombas que tiene al rededor esa celda
     */
+
     public int leftClickCell(int pos, int tam){
-
-        if(!cells.get(pos).isRevelado())
-            if(cells.get(pos).getVal() == Cell.bomba)
-                return Cell.bomba;
-        else return -2;
-
         int countBomb = 0;
-        int real = tam * tam;
 
-        if(pos == 0){ // Checo si es la esquina superior izquierda
-            if(cells.get(pos + 1).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos + tam).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos + (tam + 1)).getVal() == Cell.bomba)
-                countBomb++;
+        if(!cells.get(pos).isRevelado()){
+            if(cells.get(pos).getVal() == Cell.bomba){
+                return Cell.bomba;
+            } else {
+                int real = tam * tam;
 
+
+                if(pos == 0){ // Checo si es la esquina superior izquierda
+                    if(cells.get(pos + 1).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + tam).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + (tam + 1)).getVal() == Cell.bomba)
+                        countBomb++;
+
+                }
+                else if(pos == 0 + tam - 1){ // Checo si es la esquina superior derecha
+                    if(cells.get(pos - 1).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + (tam - 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + tam).getVal() == Cell.bomba)
+                        countBomb++;
+                }
+                else if(pos == real - tam){ // Checo si es la esquina inferior izquierda
+                    if(cells.get(pos - tam ).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - (tam + 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + 1).getVal() == Cell.bomba)
+                        countBomb++;
+                }
+                else if(pos == real - 1){ // Checo si es la esquina inferior derecha
+                    if(cells.get(pos - 1).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - (tam - 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - tam ).getVal() == Cell.bomba)
+                        countBomb++;
+                }
+                else if(pos % tam == 0){ // Checo si es una celda lateral izquierda
+                    if(cells.get(pos - tam ).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get((pos - tam) + 1).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + 1).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + tam).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + (tam + 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                }
+                else if((pos + 1) % tam == 0){ // Checo si es una celda lateral derecha
+                    if(cells.get(pos + tam).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + (tam - 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - 1).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - tam ).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - (tam - 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                }
+                else if(pos >= 1 && pos <= 7){ // Checo si es una celda lateral superior
+                    if(cells.get(pos + tam).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + (tam + 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + (tam - 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + 1).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - 1).getVal() == Cell.bomba)
+                        countBomb++;
+                }
+                else if(pos >= 72 && pos <= 80){ // Checo si es una celda lateral inferior
+                    if(cells.get(pos - tam ).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - (tam - 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - (tam + 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + 1).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - 1).getVal() == Cell.bomba)
+                        countBomb++;
+                }
+                else {
+                    if(cells.get(pos + tam).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + (tam + 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + (tam - 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos + 1).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - 1).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - tam ).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - (tam - 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                    if(cells.get(pos - (tam + 1)).getVal() == Cell.bomba)
+                        countBomb++;
+                }
+
+            }
         }
-        else if(pos == 0 + tam - 1){ // Checo si es la esquina superior deerecha
-            if(cells.get(pos - 1).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos + (tam - 1)).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos + tam).getVal() == Cell.bomba)
-                countBomb++;
-        }
-        else if(pos == real - tam){ // Checo si es la esquina inferior izquierda
-            if(cells.get(pos - tam ).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos - (tam + 1)).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos + 1).getVal() == Cell.bomba)
-                countBomb++;
-        }
-        else if(pos == real - 1){ // Checo si es la esquina inferior derecha
-            if(cells.get(pos - 1).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos - (tam - 1)).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos - tam ).getVal() == Cell.bomba)
-                countBomb++;
-        }
-        else if(pos % tam == 0){ // Checo si es una celda lateral izquierda
-            if(cells.get(pos - tam ).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos - (tam + 1)).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos + 1).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos + tam).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos + (tam + 1)).getVal() == Cell.bomba)
-                countBomb++;
-        }
-        else if((pos + 1) % tam == 0){ // Checo si es una celda lateral derecha
-            if(cells.get(pos + tam).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos + (tam - 1)).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos - 1).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos - tam ).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos - (tam - 1)).getVal() == Cell.bomba)
-                countBomb++;
-        }
-        else {
-            if(cells.get(pos + tam).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos + (tam + 1)).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos + (tam - 1)).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos + 1).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos - 1).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos - tam ).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos - (tam - 1)).getVal() == Cell.bomba)
-                countBomb++;
-            if(cells.get(pos - (tam + 1)).getVal() == Cell.bomba)
-                countBomb++;
-        }
+
+
+        // else return -2;
+
 
         cells.get(pos).setRevelado(true);
         return countBomb;
@@ -131,7 +170,7 @@ public class Tablero {
     public boolean rightClickCell(int pos){
         if(!cells.get(pos).isFlagged()){
             cells.get(pos).setFlagged(true);
-            if(cells.get(pos).getVal() == -1)
+            if(cells.get(pos).getVal() == Cell.bomba)
                 return true;
         }
         return false;
